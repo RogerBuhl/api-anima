@@ -29,7 +29,7 @@ router.post('/',(req,res)=>{
 				if(xhr.status==404)res.status(404).send(xhr.responseText)
 			    else{
 					var response=JSON.parse(xhr.responseText),data={};
-			    	(!response.data)?res.status(204).send():res.status(200).json(response.data)
+			    	(!response.data)?res.status(204).send():res.status(201).json(response.data)
 			    }
 			}catch(err){end(res,err,'POST',obj)}
 		}
