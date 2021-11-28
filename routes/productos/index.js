@@ -57,7 +57,7 @@ router.get('/:extra/id/:id',(req,res)=>{
 		}
 	})
 
-	var url=constantes.url_v3+"catalog/products/"+id
+	var url=constantes.url_v3+"catalog/products/"+id+"/"+extra
 	xhr.open("GET",url)
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
