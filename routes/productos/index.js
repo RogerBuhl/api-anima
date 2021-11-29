@@ -27,9 +27,13 @@ router.get('/id/:id',(req,res)=>{
 		if(xhr.readyState===4){
 			try{
 				var response=JSON.parse(xhr.responseText),data={};
-				console.log(response)
 				if(response.status==404)res.status(204).send()
-			    else (!response.data)?res.status(204).send():res.status(200).json(response.data)
+			    else if(!response.data)res.status(204).send()
+			    else{
+			    	data=response.data;
+			    	(data.brand_id>0)?data.brand=brands.find(b=>b.id==data.brand_id):data.brand=null
+			    	res.status(200).json(data)
+			    }
 			}catch(err){end(res,err,'GET',obj)}
 		}
 	})
@@ -73,7 +77,11 @@ router.get('/feature/:f/p/:p/l/:l',(req,res)=>{
 			try{
 				var response=JSON.parse(xhr.responseText),data={};
 			    if(response.status==404)res.status(404).send()
-			    else (!response.data.length)?res.status(204).send():res.status(200).json(response)
+			    else if(!response.data.length) res.status(204).send()
+			    else{
+			    	response.data.forEach(e=>{(e.brand_id>0)?e.brand=brands.find(b=>b.id==e.brand_id):e.brand=null})
+			    	res.status(200).json(response)
+			    }
 			}catch(err){end(res,err,'GET',obj)}
 		}
 	})
@@ -98,9 +106,7 @@ router.get('/p/:p/l/:l',(req,res)=>{
 			    else if(response.status==404)res.status(404).send()
 			    else if(!response.data.length) res.status(204).send()
 			    else{
-			    	response.data.forEach(e=>{
-			    		(e.brand_id>0)?e.brand=brands.find(b=>b.id==e.brand_id):e.brand=null
-			    	})
+			    	response.data.forEach(e=>{(e.brand_id>0)?e.brand=brands.find(b=>b.id==e.brand_id):e.brand=null})
 			    	res.status(200).json(response)
 			    }
 			}catch(err){end(res,err,'GET',obj)}
