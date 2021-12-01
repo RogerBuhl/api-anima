@@ -58,8 +58,7 @@ router.get('/:extra/id/:id',(req,res)=>{
 			    if(response.status==404)res.status(404).send()
 			    else if(!response.data.length)res.status(204).send()
 			    else{
-			    	console.log(response.data.sort((a,b)=>(a.sort_order>b.sort_order)?1:((b.sort_order>a.sort_order)?-1:0)))
-			    	//response=response.data.sort()
+			    	if(extra=='images')response.data.sort((a,b)=>(a.sort_order>b.sort_order)?1:((b.sort_order>a.sort_order)?-1:0))
 			    	res.status(200).json(response.data)
 			    }
 			}catch(err){end(res,err,'GET',obj)}
