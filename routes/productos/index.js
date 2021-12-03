@@ -117,7 +117,7 @@ router.get('/p/:p/l/:l',(req,res)=>{
 		}
 	})
 
-	var url=constantes.url_v3+"catalog/products/?"+query
+	var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&"+query
 	xhr.open("GET",url)
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
