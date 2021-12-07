@@ -46,7 +46,7 @@ router.get('/id/:id',(req,res)=>{
 
 router.get('/:extra/id/:id',(req,res)=>{
 	const 	id=String(req.params.id),extra=String(req.params.extra),
-			extras=['videos','images','variants','options']
+			extras=['videos','images','variants','options','custom-fields']
 	if(!extras.includes(extra)) return res.status(400).send('Valor no valido')
 	var xhr=new XMLHttpRequest()
 	xhr.withCredentials=true
@@ -107,8 +107,8 @@ router.get('/p/:p/l/:l',(req,res)=>{
 			try{
 				var response=JSON.parse(xhr.responseText),data={};
 			    if(response.status==422)res.status(422).json(response)
-			    else if(response.status==404)res.status(404).send()
-			    else if(!response.data.length) res.status(204).send()
+			    else if(response.status==404)res.sendStatus(404)
+			    else if(!response.data.length) res.sendStatus(204)
 			    else{
 			    	response.data.forEach(e=>{(e.brand_id>0)?e.brand=brands.find(b=>b.id==e.brand_id):e.brand=null})
 			    	res.status(200).json(response)
