@@ -43,33 +43,6 @@ router.get('/id/:id',(req,res)=>{
 	xhr.send()
 })
 
-router.get('/p/:p/l/:l',(req,res)=>{
-	const 	p=String(req.params.p),l=String(req.params.l),
-			query=req.originalUrl.split('?')[1]
-	var xhr=new XMLHttpRequest()
-	xhr.withCredentials=true
-
-	xhr.addEventListener("readystatechange",()=>{
-		if(xhr.readyState===4){
-			try{
-				var response=JSON.parse(xhr.responseText),data={};
-			    if(response.status==422)res.status(422).json(response)
-			    else if(response.status==404)res.sendStatus(404)
-			    else if(!response.data.length) res.sendStatus(204)
-			    else{
-			    	response.data.forEach(e=>{(e.brand_id>0)?e.brand=brands.find(b=>b.id==e.brand_id):e.brand=null})
-			    	res.status(200).json(response)
-			    }
-			}catch(err){end(res,err,'GET',obj)}
-		}
-	})
-
-	var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&"+query
-	xhr.open("GET",url)
-	xhr.setRequestHeader('X-Auth-Token',constantes.token)
-	xhr.send()
-})
-
 
 /*------------------------POST--------------------------*/
 router.post('/',(req,res)=>{
