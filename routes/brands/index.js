@@ -71,7 +71,7 @@ router.get('/p/:p/l/:l',(req,res)=>{
 		if(xhr.readyState===4){
 			try{
 				var response=JSON.parse(xhr.responseText),data={};
-			    if(response.status==422)res.status(422).json(response)
+			    if(response.status==422)res.status(203).json(response)
 			    else if(response.status==404)res.status(404).send()
 			    else if(!response.data.length) res.status(204).send()
 			    else res.status(200).json(response)

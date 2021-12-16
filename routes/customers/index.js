@@ -27,7 +27,7 @@ router.post('/',(req,res)=>{
 		if(xhr.readyState===4){
 			try{
 				console.log(xhr)
-				if(xhr.status==422)res.status(400).send(JSON.parse(xhr.responseText))
+				if(xhr.status==422)res.status(203).send(JSON.parse(xhr.responseText))
 				else if(xhr.status==404)res.status(404).send(xhr.responseText)
 			    else{
 					var response=JSON.parse(xhr.responseText),data={};
@@ -52,7 +52,7 @@ router.post('/login',(req,res)=>{
 	xhr.addEventListener("readystatechange",()=>{
 		if(xhr.readyState===4){
 			try{
-				if(xhr.status==422||xhr.status==429)res.status(400).send(JSON.parse(xhr.responseText))
+				if(xhr.status==422||xhr.status==429)res.status(203).send(JSON.parse(xhr.responseText))
 				else if(xhr.status==404)res.status(404).send(xhr.responseText)
 			    else{
 					var response=JSON.parse(xhr.responseText),data={};
@@ -77,7 +77,7 @@ router.post('/subscribers',(req,res)=>{
 	xhr.addEventListener("readystatechange",()=>{
 		if(xhr.readyState===4){
 			try{
-				if(xhr.status==422||xhr.status==409)res.status(400).send(JSON.parse(xhr.responseText))
+				if(xhr.status==422||xhr.status==409)res.status(203).send(JSON.parse(xhr.responseText))
 				else if(xhr.status==404)res.status(404).send(xhr.responseText)
 			    else{
 					var response=JSON.parse(xhr.responseText),data={};
