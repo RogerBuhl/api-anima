@@ -2,7 +2,6 @@ const 	router=require('express').Router(),
 		fs=require('fs'),
 		XMLHttpRequest=require("xmlhttprequest").XMLHttpRequest,
 		end=require('../functions').end,
-		brands=require('../brands/brands.json'),
 		constantes=require('../constantes.json'),
 		obj='CUSTOMER'
 
@@ -14,6 +13,34 @@ router.all('/*',(req,res,next)=>{
 			break;
 	}
 	next()
+})
+
+
+/*------------------------GET---------------------------*/
+router.get('/id/:id',(req,res)=>{
+	const id=String(req.params.id)
+	var xhr=new XMLHttpRequest()
+	xhr.withCredentials=true
+
+	xhr.addEventListener("readystatechange",()=>{
+		if(xhr.readyState===4){
+			try{
+				var response=JSON.parse(xhr.responseText),data={};
+				if(response.status==404)res.status(204).send()
+				else if(!response.data)res.status(204).send()
+				else{
+					data=response.data[0];
+					//(data.brand_id>0)?data.brand=brands.find(b=>b.id==data.brand_id):data.brand=null
+					res.status(200).json(data)
+				}
+			}catch(err){end(res,err,'GET',obj)}
+		}
+	})
+
+	var url=constantes.url_v3+"customers?id%3Ain="+id
+	xhr.open("GET",url)
+	xhr.setRequestHeader('X-Auth-Token',constantes.token)
+	xhr.send()
 })
 
 
