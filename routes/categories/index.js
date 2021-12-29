@@ -3,7 +3,7 @@ const 	router=require('express').Router(),
 		XMLHttpRequest=require("xmlhttprequest").XMLHttpRequest,
 		end=require('../functions').end,
 		constantes=require('../constantes.json'),
-		obj='BRAND'
+		obj='CATEGORY'
 
 router.all('/*',(req,res,next)=>{
     const 	modulo=req.originalUrl.split('?')[0].split('/')
@@ -35,3 +35,5 @@ router.get('/category-tree',(req,res)=>{
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
 })
+
+module.exports=router
