@@ -1,0 +1,2 @@
+- 29/12/2021 16:42:03,GET,CATEGORY,Error: ENOENT: no such file or directory, open './src/routes/categories/category-tree.json'
+- 29/12/2021 16:44:30,GET,BRAND,Error: ENOENT: no such file or directory, open './src/routes/brands/brands.json'

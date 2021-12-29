@@ -15,8 +15,7 @@ router.all('/*',(req,res,next)=>{
     next()
 })
 
-router.get('/category-tree',(req,res)=>{
-	const id=String(req.params.id)
+router.get('/file-local',(req,res)=>{
 	var xhr=new XMLHttpRequest()
 	xhr.withCredentials=true
 
@@ -25,7 +24,10 @@ router.get('/category-tree',(req,res)=>{
 			try{
 				var response=JSON.parse(xhr.responseText),data={};
 				if(response.status==404)res.status(204).send()
-			    else (!response.data)?res.status(204).send():res.status(200).json(response.data)
+			    else{
+					fs.writeFileSync('./routes/categories/category-tree.json',JSON.stringify(response.data))
+					res.status(200).send()
+				} 
 			}catch(err){end(res,err,'GET',obj)}
 		}
 	})
@@ -34,6 +36,15 @@ router.get('/category-tree',(req,res)=>{
 	xhr.open("GET",url)
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
+})
+
+router.get('/id/:id',(req,res)=>{
+	const id=String(req.params.id)
+	var xhr=new XMLHttpRequest()
+	xhr.withCredentials=true
+	const categoryTree=require('./category-tree.json')
+	let response = categoryTree.find(element=>element.id==id)
+	res.status(200).json(response)
 })
 
 module.exports=router
