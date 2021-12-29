@@ -47,4 +47,25 @@ router.get('/id/:id',(req,res)=>{
 	res.status(200).json(response)
 })
 
+router.get('/detail/id/:id',(req,res)=>{
+	const id=String(req.params.id)
+	var xhr=new XMLHttpRequest()
+	xhr.withCredentials=true
+
+	xhr.addEventListener("readystatechange",()=>{
+		if(xhr.readyState===4){
+			try{
+				var response=JSON.parse(xhr.responseText),data={};
+				if(response.status==404)res.status(204).send()
+			    else (!response.data)?res.status(204).send():res.status(200).json(response.data)
+			}catch(err){end(res,err,'GET',obj)}
+		}
+	})
+
+	var url=constantes.url_v3+"catalog/categories/"+id
+	xhr.open("GET",url)
+	xhr.setRequestHeader('X-Auth-Token',constantes.token)
+	xhr.send()
+})
+
 module.exports=router
