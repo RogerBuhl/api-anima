@@ -90,7 +90,7 @@ router.get('/feature/:f/p/:p/l/:l',(req,res)=>{
 		}
 	})
 
-	var url=constantes.url_v3+"catalog/products/?sort=date_modified&include=primary_image%2Cvariants&limit="+l+"&page="+p+"&is_featured="+f
+	var url=constantes.url_v3+"catalog/products/?sort=date_modified&include=primary_image%2Cvariants&limit="+l+"&page="+p+"&is_featured="+f+"&is_visible=true"
 	xhr.open("GET",url)
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
@@ -117,7 +117,7 @@ router.get('/p/:p/l/:l',(req,res)=>{
 		}
 	})
 
-	var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&"+query
+	var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&"+query+"&is_visible=true"
 	xhr.open("GET",url)
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
