@@ -40,12 +40,45 @@ router.get('/file-local',(req,res)=>{
 
 router.get('/id/:id',(req,res)=>{
 	const id=String(req.params.id)
-	var xhr=new XMLHttpRequest()
-	xhr.withCredentials=true
 	const categoryTree=require('./category-tree.json')
 	let response = categoryTree.find(element=>element.id==id)
 	res.status(200).json(response)
 })
+
+router.get('/tree/id/:id',(req,res)=>{
+	console.log('tree')
+	const id = String(req.params.id)
+	const categoryTree = require('./category-tree.json')
+	let response = new Object()
+	categoryTree.forEach(category=>{
+		if(category.id == id){
+			response.id = category.id
+			response.name = category.name
+			response.children = category.children
+		}else{
+			category.children.forEach(child => {
+				if(child.id == id){
+					response.id = category.id
+					response.name = category.name
+					response.children = child
+				}else{
+					child.children.forEach(subChild=>{
+						if(subChild.id == id){
+							response.id = category.id
+							response.name = category.name
+							response.children = new Object()
+							response.children.id = child.id
+							response.children.name = child.name
+							response.children.children = subChild
+						}
+					})
+				}
+			})
+		}
+	})
+	res.status(200).json(response)
+})
+
 
 router.get('/detail/id/:id',(req,res)=>{
 	const id=String(req.params.id)
