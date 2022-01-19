@@ -47,6 +47,7 @@ router.get('/id/:id',(req,res)=>{
 /*------------------------POST--------------------------*/
 router.post('/',(req,res)=>{
 	const body=JSON.stringify(req.body)
+	console.log(body)
 	var xhr=new XMLHttpRequest()
 	xhr.withCredentials=true
 

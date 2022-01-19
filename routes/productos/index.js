@@ -99,6 +99,7 @@ router.get('/feature/:f/p/:p/l/:l',(req,res)=>{
 router.get('/p/:p/l/:l',(req,res)=>{
 	const 	p=String(req.params.p),l=String(req.params.l),
 			query=req.originalUrl.split('?')[1]
+			console.log(query)
 	var xhr=new XMLHttpRequest()
 	xhr.withCredentials=true
 
@@ -116,8 +117,12 @@ router.get('/p/:p/l/:l',(req,res)=>{
 			}catch(err){end(res,err,'GET',obj)}
 		}
 	})
-
-	var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&"+query+"&is_visible=true"
+	if(query){
+		var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&"+query+"&is_visible=true"
+	}else{
+		var url=constantes.url_v3+"catalog/products/?limit="+l+"&page="+p+"&is_visible=true"
+	}
+	
 	xhr.open("GET",url)
 	xhr.setRequestHeader('X-Auth-Token',constantes.token)
 	xhr.send()
