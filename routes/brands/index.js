@@ -49,7 +49,7 @@ router.get('/file-local',(req,res)=>{
 				if(response.status==404)res.status(404).send()
 				else if(!response.data.length)res.status(204).send()
 				else{
-					fs.writeFileSync('./routes/brands/brands.json',JSON.stringify(response.data))
+					fs.writeFileSync('./src_anima/routes/brands/brands.json',JSON.stringify(response.data))
 					res.status(200).send()
 			    }
 			}catch(err){end(res,err,'GET',obj)}

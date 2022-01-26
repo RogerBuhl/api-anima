@@ -25,7 +25,7 @@ router.get('/file-local',(req,res)=>{
 				var response=JSON.parse(xhr.responseText),data={};
 				if(response.status==404)res.status(204).send()
 			    else{
-					fs.writeFileSync('./routes/categories/category-tree.json',JSON.stringify(response.data))
+					fs.writeFileSync('./src_anima/routes/categories/category-tree.json',JSON.stringify(response.data))
 					res.status(200).send()
 				} 
 			}catch(err){end(res,err,'GET',obj)}
