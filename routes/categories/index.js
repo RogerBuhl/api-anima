@@ -45,39 +45,41 @@ router.get('/id/:id',(req,res)=>{
 	res.status(200).json(response)
 })
 
-router.get('/tree/id/:id',(req,res)=>{
+router.get('/tree/id/:id',async (req,res)=>{
 	console.log('tree')
 	const id = String(req.params.id)
 	const categoryTree = require('./category-tree.json')
-	let response = new Object()
-	categoryTree.forEach(category=>{
-		if(category.id == id){
-			response.id = category.id
-			response.name = category.name
-			response.children = category.children
-		}else{
-			category.children.forEach(child => {
-				if(child.id == id){
-					response.id = category.id
-					response.name = category.name
-					response.children = child
-				}else{
-					child.children.forEach(subChild=>{
-						if(subChild.id == id){
-							response.id = category.id
-							response.name = category.name
-							response.children = new Object()
-							response.children.id = child.id
-							response.children.name = child.name
-							response.children.children = subChild
-						}
-					})
-				}
-			})
-		}
-	})
+	let response
+	try{
+		response = await barrerArbol(categoryTree,id)
+		console.log(response)
+		
+	}catch(err){
+		console.log('cacheo el error')
+	}
 	res.status(200).json(response)
 })
+
+function barrerArbol(categoryTree,id){
+	return new Promise(async(resolve,reject)=>{
+		try{
+			categoryTree.forEach(async category=>{
+				if(category.id == id){
+					console.log('retornando:',category)
+					resolve(category)
+				}else{
+					if(category.children.length>0){
+						await barrerArbol(category.children,id)
+					}
+					reject()
+				}
+			})
+		}catch(err){
+			reject(err)
+		}
+	})
+	
+}
 
 
 router.get('/detail/id/:id',(req,res)=>{

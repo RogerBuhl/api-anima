@@ -1,2 +1,7 @@
 - 29/12/2021 16:42:03,GET,CATEGORY,Error: ENOENT: no such file or directory, open './src/routes/categories/category-tree.json'
 - 29/12/2021 16:44:30,GET,BRAND,Error: ENOENT: no such file or directory, open './src/routes/brands/brands.json'
+- 26/1/2022 11:09:48,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
+- 26/1/2022 11:11:34,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
+- 26/1/2022 11:14:52,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
+- 26/1/2022 11:46:34,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
+- 26/1/2022 11:48:30,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
