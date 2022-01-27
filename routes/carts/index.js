@@ -43,6 +43,60 @@ router.get('/id/:id',(req,res)=>{
 	xhr.send()
 })
 
+router.get('/order/id/:id',(req,res)=>{
+	const id = String(req.params.id)
+	var xhr = new XMLHttpRequest()
+	xhr.withCredentials = true
+
+	xhr.addEventListener("readystatechange",()=>{
+		if(xhr.readyState===4){
+			try{
+				var response=JSON.parse(xhr.responseText),data={};
+				if(response.status==404)res.status(204).send()
+			    else if(response.length == 0)res.status(204).send()
+			    else{
+			    	data=response;
+			    	res.status(200).json(data)
+			    }
+			}catch(err){end(res,err,'GET',obj)}
+		}
+	})
+
+	var url=constantes.url_v2+"orders/"+id
+	xhr.open("GET",url)
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.setRequestHeader('accept', 'application/json')
+	xhr.setRequestHeader('X-Auth-Token',constantes.token)
+	xhr.send()
+})
+
+router.get('/order/id/:id/products',(req,res)=>{
+	const id = String(req.params.id)
+	var xhr = new XMLHttpRequest()
+	xhr.withCredentials = true
+
+	xhr.addEventListener("readystatechange",()=>{
+		if(xhr.readyState===4){
+			try{
+				var response=JSON.parse(xhr.responseText),data={};
+				if(response.status==404)res.status(204).send()
+			    else if(response.length == 0)res.status(204).send()
+			    else{
+			    	data=response;
+			    	res.status(200).json(data)
+			    }
+			}catch(err){end(res,err,'GET',obj)}
+		}
+	})
+
+	var url=constantes.url_v2+"orders/"+id+"/products"
+	xhr.open("GET",url)
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.setRequestHeader('accept', 'application/json')
+	xhr.setRequestHeader('X-Auth-Token',constantes.token)
+	xhr.send()
+})
+
 router.get('/past-orders/customer/:id/p/:p/l/:l',(req,res)=>{
 	const id = String(req.params.id)
 	const page = String(req.params.p)
@@ -65,7 +119,7 @@ router.get('/past-orders/customer/:id/p/:p/l/:l',(req,res)=>{
 		}
 	})
 
-	var url=constantes.url_v2+"orders?customer_id="+id+"&limit="+limit+"&page="+page
+	var url=constantes.url_v2+"orders?sort=date_modified%3Adesc&customer_id="+id+"&limit="+limit+"&page="+page
 	xhr.open("GET",url)
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.setRequestHeader('accept', 'application/json')
