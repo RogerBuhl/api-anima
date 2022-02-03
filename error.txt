@@ -5,3 +5,9 @@
 - 26/1/2022 11:14:52,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
 - 26/1/2022 11:46:34,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
 - 26/1/2022 11:48:30,GET,CART,SyntaxError: Unexpected token < in JSON at position 0
+- 2/2/2022 15:13:01,GET,PRODUCTO,SyntaxError: Unexpected token < in JSON at position 1
+- 2/2/2022 16:11:20,GET,PRODUCTO,TypeError: Cannot read property 'push' of undefined
+- 2/2/2022 16:33:01,GET,PRODUCTO,TypeError: materials.forEach is not a function
+- 2/2/2022 17:31:14,GET,PRODUCTO,Error: INVALID_STATE_ERR: send flag is true
+- 2/2/2022 17:31:53,GET,PRODUCTO,Error: INVALID_STATE_ERR: send flag is true
+- 2/2/2022 17:32:49,GET,PRODUCTO,Error: INVALID_STATE_ERR: send flag is true
