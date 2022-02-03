@@ -49,35 +49,78 @@ router.get('/tree/id/:id',async (req,res)=>{
 	console.log('tree')
 	const id = String(req.params.id)
 	const categoryTree = require('./category-tree.json')
-	let response
+	let result = new Object()
 	try{
-		response = await barrerArbol(categoryTree,id)
-		console.log(response)
+		let nivel = 1;
+		let index = 0;
+		for await (let categoria of categoryTree) {
+			console.log("categoria",categoria)
+			if(categoria.id == id){
+				console.log("devuelve en ",index)
+				result.id = categoria.id
+				result.url = categoria.url
+				result.name = categoria.name;
+				result.parent = []
+				result.children = categoria.children;
+				break;
+			}else{
+				if(!result.id && categoria.children.length > 0)
+					result = await barrerNivel(nivel,[],categoria,id)
+			}
+			index++;
+		}
+
+		//console.log("result listado de categorias",result)
 		
 	}catch(err){
-		console.log('cacheo el error')
+		console.log('cacheo el error',err)
 	}
-	res.status(200).json(response)
+
+	res.status(200).json(result)
 })
 
-function barrerArbol(categoryTree,id){
-	return new Promise(async(resolve,reject)=>{
-		try{
-			categoryTree.forEach(async category=>{
-				if(category.id == id){
-					console.log('retornando:',category)
-					resolve(category)
-				}else{
-					if(category.children.length>0){
-						await barrerArbol(category.children,id)
-					}
-					reject()
+function barrerNivel(nivel,categoriaAnterior,categoriaPadre,idBusqueda){
+	try{
+		let result = new Object();
+
+		for (let categoria of categoriaPadre.children) {
+			//console.log("categoria en barrido ",categoria)
+			//console.log("categoriaPadre[nivel]",categoriaPadre[nivel])
+			if(categoria.id == idBusqueda){
+				console.log("lo encuentro en barrido nivel",nivel)
+				result.id = categoria.id
+				result.url = categoria.url
+				result.name = categoria.name;
+				result.children = categoria.children;
+				result.parent = new Object()
+				result.parent.id = categoriaPadre.id;
+				result.parent.url = categoriaPadre.url;
+				result.parent.name = categoriaPadre.name;
+				result.parent.children = [];
+				if(nivel > 1){
+					result.parent.parent = new Object()
+					result.parent.parent.id = categoriaAnterior.id;
+					result.parent.parent.url = categoriaAnterior.url;
+					result.parent.parent.name = categoriaAnterior.name;
+					result.parent.parent.children = [];
+					//result.parent.parent = categoriaAnterior
 				}
-			})
-		}catch(err){
-			reject(err)
+
+
+				console.log("encontro,result",result)
+				break;
+			}else{
+				if(categoria.children.length>0)
+					result = barrerNivel(nivel+1,categoriaPadre,categoria,idBusqueda)
+				
+			}
 		}
-	})
+
+		return result;
+
+	}catch(err){
+		console.log('cacheo el error en barrido',err)
+	}
 	
 }
 
