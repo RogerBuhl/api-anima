@@ -80,7 +80,6 @@ function getProductosPage(page,limit){
 		var xhr = new XMLHttpRequest()
 		xhr.withCredentials = true
 		xhr.addEventListener("readystatechange", () => {
-            console.log(xhr.responseText)
 			if (xhr.readyState === 4) {
 				try {
 					var response = JSON.parse(xhr.responseText),

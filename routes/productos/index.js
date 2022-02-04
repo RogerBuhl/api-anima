@@ -279,9 +279,9 @@ function getProductsPage(query, page, limit) {
 		})
 
 		if (query) {
-			var url = constantes.url_v3 + "catalog/products/?limit=" + limit + "&page=" + page + "&" + query + "&is_visible=true&include=custom_fields"
+			var url = constantes.url_v3 + "catalog/products/?limit=" + limit + "&page=" + page + "&" + query + "&is_visible=true&include=custom_fields,primary_image"
 		} else {
-			var url = constantes.url_v3 + "catalog/products/?limit=" + limit + "&page=" + page + "&is_visible=true&include=custom_fields"
+			var url = constantes.url_v3 + "catalog/products/?limit=" + limit + "&page=" + page + "&is_visible=true&include=custom_fields,primary_image"
 		}
 		xhr.open("GET", url)
 		xhr.setRequestHeader('X-Auth-Token', constantes.token)
