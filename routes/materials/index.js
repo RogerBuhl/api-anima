@@ -20,7 +20,7 @@ router.get('/file-local', async (req,res)=>{
 	var xhr=new XMLHttpRequest()
 	xhr.withCredentials=true
     pageToSearch = 1
-    perPageToSearch = 10
+    perPageToSearch = 250
     let products = []
     let materials = []
 
